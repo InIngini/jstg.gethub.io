@@ -1,56 +1,173 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #FF4D4D;
 }
-.toolbar {
-    background-color: #FF4D4D;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content:center;
-    align-items: center;
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  padding: 10px;
+  max-width: 1050px;
+  align-items: center;
+  justify-content: center;
 }
-#toolbar_size{
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items: center;
+section{
+  background: #fff;
+  border-radius: 7px;
 }
-#toolbar_size label{
-    margin-top: 5px;
+.tools-board{
+  
+  justify-content: center;
+  width: 90vw;
+  padding: 15px 22px 0;
+  display: flex;
+  flex-direction: row;
 }
-.toolbar div, .toolbar button {
-    margin-right: 10px;
+.row{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.toolbar input {
-    width: 50px;
-    margin-left: 5px;
+.row .options{
+  list-style: none;
+  margin: 10px;
 }
-.toolbar button {
-    padding: 5px 10px;
-    background-color: white;
-    border: 1px solid black;
-    cursor: pointer;
+.row #size{
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
 }
-.toolbar button:hover {
-    background-color: #f0f0f0;
+.row #size div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-#canvas {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    border: 1px solid black;
+.row #size div label{
+  width: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  margin-top: 15px;
 }
-.shape {
-    width: 80px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    background-color: #f0f0f0
+.row #size div input{
+  width: 40px;
+  margin-left: 5px;
+  margin-top: 15px;
 }
-.shape svg {
-    width: 52px;
-    height: 52px;
+.row .options .option{
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.option:is(:hover, .active) img{
+  filter: invert(51%) sepia(77%) saturate(4915%) hue-rotate(345deg) brightness(100%) contrast(101%);
+}
+.option :where(span, label){
+  color: #5A6168;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.option:is(:hover, .active) :where(span, label){
+  color: #FF4D4D;
+}
+.option #size-slider{
+  width: 100%;
+  height: 5px;
+  margin-top: 10px;
+  accent-color: #FF4D4D; 
+}
+.colors .options{
+  display: flex;
+  justify-content: space-between;
+}
+.colors .option{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin-top: 3px;
+  position: relative;
+}
+.row.colors .options {
+  margin-right: 40px;
+}
+.colors .option:nth-child(1){
+  background-color: #fff;
+  border: 1px solid #bfbfbf;
+}
+.colors .option:nth-child(2){
+  background-color: #000;
+}
+.colors .option:nth-child(3){
+  background-color: #E02020;
+}
+.colors .option:nth-child(4){
+  background-color: #6DD400;
+}
+.colors .option:nth-child(5){
+  background-color: #184af0;
+}
+.colors .option.selected::before{
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  height: 12px;
+  width: 12px;
+  background: inherit;
+  border-radius: inherit;
+  border: 2px solid #fff;
+  transform: translate(-50%, -50%);
+}
+.colors .option:first-child.selected::before{
+  border-color: #ccc;
+}
+.option #color-picker{
+  opacity: 0;
+  cursor: pointer;
+}
+.buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.buttons button{
+  width: 100%;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 11px 0;
+  font-size: 0.9rem;
+  margin-bottom: 13px;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.buttons .clear-canvas{
+  color: #6C757D;
+  border: 1px solid #6C757D;
+  transition: all 0.3s ease;
+}
+.clear-canvas:hover{
+  color: #fff;
+  background: #6C757D;
+}
+.buttons .save-img{
+  background: #FF4D4D;
+  border: 1px solid #FF4D4D;
+}
+.drawing-board{
+  overflow: hidden;
+  width: 98vw;
+  height: 100vh;
+}
+.drawing-board canvas{
+  width: 100%;
+  height: 100%;
 }

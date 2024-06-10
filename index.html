@@ -1,27 +1,92 @@
 <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>JS Mini App</title>
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <script src="script.js"></script>
-        <link href="style.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="toolbar">
-            <div id="toolbar_size">
-                <label>Размеры офиса:</label>
-                <label>W: <input type="text"></label>
-                <label>H: <input type="text"></label>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JS Mini App</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>   
+  </head>
+  <body>
+    <div class="container">
+      <section class="tools-board">
+        <div class="row">
+          <label class="title">Размер</label>
+          <div id="size">
+            <div>
+              <label>W:</label>
+              <label>H:</label>
             </div>
-            <div>Добавить сущность:</div>
-            <button class="shape" id="rectangle"><svg><rect width="100%" height="100%" fill="none" stroke="black"></rect></svg></button>
-            <button class="shape" id="circle"><svg><circle cx="50%" cy="50%" r="50%" fill="none" stroke="black"></circle></svg></button>
-            <button class="shape" id="polygon"><svg><polygon points="25,0 50,50 0,50" fill="none" stroke="black"></polygon></svg></button>
-            <button class="shape" id="line"><svg><line x1="0" y1="0" x2="100%" y2="100%" stroke="black"></line></svg></button>
-            <button class="shape" id="text"><svg><text x="50%" y="50%" text-anchor="middle">Text</text></svg></button>
-            <button>Сохранить</button>
+            <div>
+              <input id="W">
+              <input id="H">
+            </div>
+          </div>
         </div>
-        <canvas id="canvas"></canvas>
-    </body>
+        <div class="row">
+          <label class="title">Фигуры</label>
+          <ul class="options">
+            <li class="option tool" id="rectangle">
+              <img src="icons/rectangle.svg" alt="">
+              <span>Прямоугольник</span>
+            </li>
+            <li class="option tool" id="circle">
+              <img src="icons/circle.svg" alt="">
+              <span>Круг</span>
+            </li>
+            <li class="option tool" id="triangle">
+              <img src="icons/triangle.svg" alt="">
+              <span>Треугольник</span>
+            </li>
+            <li class="option tool" id="line">
+              <img src="icons/line.svg" alt="">
+              <span>Линия</span>
+            </li>
+            <li class="option tool" id="text">
+              <img src="icons/text.svg" alt="">
+              <span>Текст</span>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <label class="title">Кисть</label>
+          <ul class="options">
+            <li class="option active tool" id="brush">
+              <img src="icons/brush.svg" alt="">
+              <span>Кисть</span>
+            </li>
+            <li class="option tool" id="eraser">
+              <img src="icons/eraser.svg" alt="">
+              <span>Ластик</span>
+            </li>
+            <li class="option">
+              <input type="range" id="size-slider" min="1" max="30" value="5">
+            </li>
+          </ul>
+        </div>
+        <div class="row colors">
+          <label class="title">Цвета</label>
+          <ul class="options">
+            <li class="option"></li>
+            <li class="option selected"></li>
+            <li class="option"></li>
+            <li class="option"></li>
+            <li class="option">
+              <input type="color" id="color-picker" value="#4A98F7">
+            </li>
+          </ul>
+        </div>
+        <div class="row buttons">
+          <button class="clear-canvas">Очистить холст</button>
+          <button class="save-img">Сохранить</button>
+        </div>
+      </section>
+      <section class="drawing-board">
+        <canvas></canvas>
+      </section>
+    </div>
+    
+  </body>
 </html>
