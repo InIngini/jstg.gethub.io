@@ -1,4 +1,4 @@
-// Настройка холста
+/////////////////Настройка холста////////////////////////
 const canvas = document.querySelector("canvas"),
     toolBtns = document.querySelectorAll(".tool"),
     sizeSlider = document.querySelector("#size-slider"),
@@ -44,9 +44,100 @@ window.addEventListener("resize", () => {
     }
 });
 
+///////////Размеры офиса/////////////
+// Получаем элементы ввода
+// Получаем элементы ввода и кнопку
+var inputW = document.getElementById('W');
+var inputH = document.getElementById('H');
+var btn = document.getElementById('wh');
+
+const drawOffice = () => {
+    // Получение значений ширины и высоты из элементов ввода
+    const width = parseInt(inputW.value);
+    const height = parseInt(inputH.value);
+
+    // Проверка, не превышают ли размеры 100
+    if (width > 100 || height > 100) {
+        alert('У вас не может быть такой большой офис!');
+        return;
+    }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (width<=50&&height<=50)
+    {
+        ctx.strokeRect(50, 50, width*15, height*15);
+    }
+    else if ((width<=70&&width>50)&&height<=50){
+        ctx.strokeRect(50, 50, width*13, height*13);
+    }
+    else if ((width<=100&&width>70)&&height<=50){
+        ctx.strokeRect(50, 50, width*10, height*10);
+    }
+    else if (width<=70&&height<=70){
+        ctx.strokeRect(50, 50, width*10, height*10);
+    }
+    else if (width<=100&&height<=100){
+        ctx.strokeRect(50, 50, width*7, height*7);
+    }
+};
+
+// Слушатель события щелчка для кнопки
+btn.addEventListener('click', drawOffice);
+
+// Ограничение ввода только для чисел
+inputW.addEventListener('keypress', (e) => {
+    if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+    }
+});
+
+inputH.addEventListener('keypress', (e) => {
+    if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+    }
+});
+
+
+///////////Рисование//////////////
+shiftKey=false;
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') {
+      shiftKey = true;
+    }
+  });
+  
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') {
+      shiftKey = false;
+    }
+  });
 // Рисование прямоугольника
 const drawRect = (e) => {
-    ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+    //ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+    if (shiftKey) {
+        // Рассчитать размеры прямоугольника, чтобы стороны были параллельны осям
+        const width = e.offsetX - prevMouseX;
+        const height = e.offsetY - prevMouseY;
+        if(width>=0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+        else if(width<0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width>=0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width<0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+      } else {
+        // Обычное рисование прямоугольника
+        ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+      }
 }
 
 // Рисование круга
@@ -70,10 +161,70 @@ const drawTriangle = (e) => {
 }
 
 const drawLine = (e) => {
-    ctx.beginPath(); // Создание нового пути для рисования линии
-    ctx.moveTo(prevMouseX, prevMouseY); // Перемещение линии в положение указателя мыши
-    ctx.lineTo(e.offsetX, e.offsetY); // Создание линии в соответствии с положением указателя мыши
-    ctx.stroke(); // Отрисовка линии
+    //ctx.beginPath(); // Создание нового пути для рисования линии
+    //ctx.moveTo(prevMouseX, prevMouseY); // Перемещение линии в положение указателя мыши
+    //ctx.lineTo(e.offsetX, e.offsetY); // Создание линии в соответствии с положением указателя мыши
+    //ctx.stroke(); // Отрисовка линии
+    if (shiftKey) {
+        // Рассчитать угол наклона линии
+        const angle = Math.atan2(e.offsetY - prevMouseY, e.offsetX - prevMouseX);
+        
+        // Ограничить угол наклона значениями 0, 45, 90, 135, 180, 225, 270, 315 градусов
+        const snappedAngle = Math.round(angle / (Math.PI / 4)) * (Math.PI / 4);
+        
+        // Рассчитать координаты конца линии с учетом ограниченного угла наклона
+        const dx = Math.cos(snappedAngle) * (e.offsetX - prevMouseX);
+        const dy = Math.sin(snappedAngle) * (e.offsetX - prevMouseX);
+        //alert(Math.round(angle,2)+" "+dx+" "+dy);
+
+        if (snappedAngle === Math.PI / 2 || snappedAngle === -Math.PI / 2) {
+            // Нарисовать вертикальную линию
+            ctx.beginPath();
+            ctx.moveTo(prevMouseX, prevMouseY);
+            ctx.lineTo(prevMouseX, prevMouseY -(prevMouseY-e.offsetY));
+            ctx.stroke();
+        } else if(snappedAngle<=0&&dy<=0 || snappedAngle>0&&dy>0)
+        {
+            // Нарисовать линию с заданными координатами конца
+            ctx.beginPath();
+            ctx.moveTo(prevMouseX, prevMouseY);
+            ctx.lineTo(prevMouseX + dx, prevMouseY + dy);
+            ctx.stroke();
+        }
+        else if(snappedAngle>0&&dy<=0 || snappedAngle<=0&&dy>0)
+        {
+            // Нарисовать линию с заданными координатами конца
+            ctx.beginPath();
+            ctx.moveTo(prevMouseX, prevMouseY);
+            ctx.lineTo(prevMouseX - dx, prevMouseY - dy);
+            ctx.stroke();
+        }
+        else
+        {
+            if(snappedAngle==0)
+            {
+                // Нарисовать линию с заданными координатами конца
+                ctx.beginPath();
+                ctx.moveTo(prevMouseX, prevMouseY);
+                ctx.lineTo(prevMouseX, prevMouseY + dy);
+                ctx.stroke()
+            }
+            else
+            {
+                // Нарисовать линию с заданными координатами конца
+                ctx.beginPath();
+                ctx.moveTo(prevMouseX, prevMouseY);
+                ctx.lineTo(prevMouseX, prevMouseY - dy);
+                ctx.stroke()
+            }
+        }
+      } else {
+        // Обычное рисование линии
+        ctx.beginPath();
+        ctx.moveTo(prevMouseX, prevMouseY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+      }
 };
 
 const drawText = (e) => {
@@ -87,7 +238,7 @@ const drawText = (e) => {
     input.style.left = e.offsetX+ 'px';
     input.style.top = e.offsetY+ canvas.offsetTop + 'px';
     input.style.width = '100px';
-    input.style.font='14px Arial';
+    input.style.font='12px Arial';
     input.style.fillStyle = 'black';
 
     // Установка начального значения текста
@@ -104,28 +255,52 @@ const drawText = (e) => {
             const text = input.value;
 
             // Добавление текстового узла на холст
-            ctx.font = '14px Arial';
+            ctx.font = '12px Arial';
             ctx.fillStyle = 'black';
-            ctx.fillText(text, mouseX, mouseY+5);
+            ctx.fillText(text, mouseX, mouseY+15);
 
             // Удаление текстового поля
             document.body.removeChild(input);
-            canvas.focus();
+
+            canvas.focus(); 
+            
         }
     });
-    
-
 };
   
 let lastTableNumber = 0; // Переменная для хранения номера последнего добавленного стола
 
 const drawTable = (e) => {
     ctx.beginPath(); // Создание нового пути для рисования прямоугольника
-    ctx.rect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY); // Создание прямоугольника в соответствии с положением указателя мыши
+    if (shiftKey) {
+        // Рассчитать размеры прямоугольника, чтобы стороны были параллельны осям
+        const width = e.offsetX - prevMouseX;
+        const height = e.offsetY - prevMouseY;
+        if(width>=0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+        else if(width<0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width>=0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width<0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+      } else {
+        // Обычное рисование прямоугольника
+        ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+      }
+    //ctx.rect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY); // Создание прямоугольника в соответствии с положением указателя мыши
     ctx.stroke(); // Отрисовка прямоугольника
 
     // Отрисовка текста по центру прямоугольника
-    ctx.font = "14px Arial"; // Установка шрифта и размера текста
+    ctx.font = "12px Arial"; // Установка шрифта и размера текста
     ctx.fillStyle = "black"; // Установка цвета текста
     ctx.textAlign = "center"; // Установка выравнивания текста по центру
     // Сохранение номера стола в переменной text
@@ -168,45 +343,45 @@ const drawM = (e) => {
     ctx.lineWidth = 2; // Толщина линии
     ctx.strokeStyle = "#000000";
     ctx.stroke();
-  };
+};
   
   
-  const drawF = (e) => {
-    // Нарисовать голову
-    ctx.beginPath();
-    //let radius = (e.clientY - prevMouseY)/7;
-    let radius =Math.sqrt(Math.pow((prevMouseX - e.offsetX)/4, 2) + Math.pow((prevMouseY - e.offsetY)/7, 2))
-    ctx.arc(prevMouseX+radius, prevMouseY+radius, radius, 0, 2 * Math.PI); // Создание головы в соответствии с положением указателя мыши
-    ctx.stroke();
-  
-    // Нарисовать тело
-    ctx.beginPath();
-    ctx.moveTo(prevMouseX+radius, prevMouseY + radius*2); // Начало тела (нижняя часть головы)
-    ctx.lineTo(prevMouseX + radius, prevMouseY + radius*3); // Конец тела
-    ctx.lineWidth = 2; // Толщина линии
-    ctx.strokeStyle = "#000000";
-    ctx.stroke();
-  
-    // Нарисовать руки
-    ctx.beginPath();
-    ctx.moveTo(prevMouseX, prevMouseY +3*radius); // Левая рука
-    ctx.lineTo(prevMouseX + 2*radius, prevMouseY +3*radius); // Правая рука
-    ctx.lineWidth = 2; // Толщина линии
-    ctx.strokeStyle = "#000000";
-    ctx.stroke();
-  
-    // Нарисовать юбку
-    ctx.beginPath();
-    ctx.moveTo(prevMouseX + radius, prevMouseY + radius*3); // Начало юбки
-    ctx.lineTo(prevMouseX, prevMouseY + radius*7); // Левая сторона
-    ctx.moveTo(prevMouseX + radius, prevMouseY + radius*3); // Начало юбки
-    ctx.lineTo(prevMouseX + radius*2, prevMouseY + radius*7); // Правая сторона
-    ctx.moveTo(prevMouseX, prevMouseY + radius*7); // Начало низа
-    ctx.lineTo(prevMouseX + radius*2, prevMouseY + radius*7); // Конец ниха
-    ctx.lineWidth = 2; // Толщина линии
-    ctx.strokeStyle = "#000000";
-    ctx.stroke();
-  };
+const drawF = (e) => {
+// Нарисовать голову
+ctx.beginPath();
+//let radius = (e.clientY - prevMouseY)/7;
+let radius =Math.sqrt(Math.pow((prevMouseX - e.offsetX)/4, 2) + Math.pow((prevMouseY - e.offsetY)/7, 2))
+ctx.arc(prevMouseX+radius, prevMouseY+radius, radius, 0, 2 * Math.PI); // Создание головы в соответствии с положением указателя мыши
+ctx.stroke();
+
+// Нарисовать тело
+ctx.beginPath();
+ctx.moveTo(prevMouseX+radius, prevMouseY + radius*2); // Начало тела (нижняя часть головы)
+ctx.lineTo(prevMouseX + radius, prevMouseY + radius*3); // Конец тела
+ctx.lineWidth = 2; // Толщина линии
+ctx.strokeStyle = "#000000";
+ctx.stroke();
+
+// Нарисовать руки
+ctx.beginPath();
+ctx.moveTo(prevMouseX, prevMouseY +3*radius); // Левая рука
+ctx.lineTo(prevMouseX + 2*radius, prevMouseY +3*radius); // Правая рука
+ctx.lineWidth = 2; // Толщина линии
+ctx.strokeStyle = "#000000";
+ctx.stroke();
+
+// Нарисовать юбку
+ctx.beginPath();
+ctx.moveTo(prevMouseX + radius, prevMouseY + radius*3); // Начало юбки
+ctx.lineTo(prevMouseX, prevMouseY + radius*7); // Левая сторона
+ctx.moveTo(prevMouseX + radius, prevMouseY + radius*3); // Начало юбки
+ctx.lineTo(prevMouseX + radius*2, prevMouseY + radius*7); // Правая сторона
+ctx.moveTo(prevMouseX, prevMouseY + radius*7); // Начало низа
+ctx.lineTo(prevMouseX + radius*2, prevMouseY + radius*7); // Конец ниха
+ctx.lineWidth = 2; // Толщина линии
+ctx.strokeStyle = "#000000";
+ctx.stroke();
+};
   
 const drawDoor = (e) => {
     // Рисование палки двери
@@ -239,9 +414,10 @@ const drawLadder = (e) => {
         ctx.stroke(); // Отрисовка линии
     }
 };
+/////////ктрл+зт, ктрл+у////////////
+// Стек действий (для отмены)
 
-
-
+//////////////Маусдаун, маусмув и маусап/////////////////
 // Начало рисования
 const startDraw = (e) => {
     isDrawing = true;
@@ -254,7 +430,10 @@ const startDraw = (e) => {
     // Копирование данных холста и передача в качестве значения snapshot.. это предотвращает перетаскивание изображения
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     
+
     if (selectedTool === "text"){
+        
+        isDrawing=false;
         drawText(e);
     }
     else if (selectedTool === "table") {
