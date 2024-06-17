@@ -7,6 +7,8 @@ const canvas = document.querySelector("canvas"),
     clearCanvas = document.querySelector(".clear-canvas"),
     saveImg = document.querySelector(".save-img"),
     ctx = canvas.getContext("2d");
+    const stageElement = document.getElementById("stage");
+    const whatElement = document.getElementById("what");
 
 // Глобальные переменные с начальными значениями
 let prevMouseX, prevMouseY, snapshot,
@@ -68,15 +70,26 @@ const drawOffice = () => {
     tableCoordinates.slice(0);
     lastTableNumber=0;
 
-    if (width<=50&&height<=50)
+    if (width<=30&&height<=30)
     {
-        ctx.strokeRect(50, 50, width*15, height*15);
+        ctx.strokeRect(50, 50, width*22, height*22);
         tableCoordinates.push({
             number: 0,
             x1: 50,
             y1: 50,
-            x2: 50+width*15,
-            y2: 50+height*15
+            x2: 50+width*22,
+            y2: 50+height*22
+            });
+    }
+    else if (width<=50&&height<=50)
+    {
+        ctx.strokeRect(50, 50, width*13, height*13);
+        tableCoordinates.push({
+            number: 0,
+            x1: 50,
+            y1: 50,
+            x2: 50+width*13,
+            y2: 50+height*13
           });
     }
     else if ((width<=70&&width>50)&&height<=50){
@@ -89,14 +102,34 @@ const drawOffice = () => {
             y2: 50+height*13
           });
     }
-    else if ((width<=100&&width>70)&&height<=50){
-        ctx.strokeRect(50, 50, width*10, height*10);
+    else if ((width<=70&&width>30)&&height<=50){
+        ctx.strokeRect(50, 50, width*17, height*17);
         tableCoordinates.push({
             number: 0,
             x1: 50,
             y1: 50,
-            x2: 50+width*10,
-            y2: 50+height*10
+            x2: 50+width*17,
+            y2: 50+height*17
+          });
+    }
+    else if ((width<=100&&width>70)&&height<=50){
+        ctx.strokeRect(50, 50, width*13, height*13);
+        tableCoordinates.push({
+            number: 0,
+            x1: 50,
+            y1: 50,
+            x2: 50+width*13,
+            y2: 50+height*13
+          });
+    }
+    else if ((width<=100&&width>70)&&height<=60){
+        ctx.strokeRect(50, 50, width*12, height*12);
+        tableCoordinates.push({
+            number: 0,
+            x1: 50,
+            y1: 50,
+            x2: 50+width*12,
+            y2: 50+height*12
           });
     }
     else if (width<=70&&height<=70){
@@ -107,6 +140,26 @@ const drawOffice = () => {
             y1: 50,
             x2: 50+width*10,
             y2: 50+height*10
+          });
+    }
+    else if ((width<=100&&width>70)&&height<=70){
+        ctx.strokeRect(50, 50, width*10, height*10);
+        tableCoordinates.push({
+            number: 0,
+            x1: 50,
+            y1: 50,
+            x2: 50+width*11,
+            y2: 50+height*11
+          });
+    }
+    else if ((width<=100&&width>70)&&height<=80){
+        ctx.strokeRect(50, 50, width*9, height*9);
+        tableCoordinates.push({
+            number: 0,
+            x1: 50,
+            y1: 50,
+            x2: 50+width*9,
+            y2: 50+height*9
           });
     }
     else if (width<=100&&height<=100){
@@ -635,6 +688,20 @@ clearCanvas.addEventListener("click", () => {
 
 // Обработка события нажатия на кнопку сохранения изображения
 saveImg.addEventListener("click", () => {
+    // Получение координат выделенной области
+  const { n, x1, y1, x2, y2 } = tableCoordinates[0];
+  // Вычисление размеров выделенной области
+  const width = x2+50;
+  const height = y2+50;
+  savedImage = ctx.getImageData(0, 0, width, height);
+  
+  canvas.width = width;
+  canvas.height = height;
+  
+    if (savedImage) {
+        ctx.putImageData(savedImage, 0, 0);
+    }
+
     const link = document.createElement("a"); // Создание элемента <a>
     link.download = `${Date.now()}.jpg`; // Передача текущей даты как значения скачивания ссылки
     link.href = canvas.toDataURL(); // Передача данных холста как значения ссылки
@@ -671,3 +738,27 @@ function handleMouseUp(e) {
 // Обработка события отпускания кнопки мыши на холсте  
 canvas.addEventListener("mouseup", handleMouseUp);
   
+//////Этапы/////
+/*
+// Функция для изменения содержимого элемента "Этап"
+function changeStage(newStage) {
+  stageElement.innerHTML = newStage;
+}
+
+// Функция для изменения содержимого элемента "Что сделать"
+function changeWhat(newWhat) {
+  whatElement.innerHTML = newWhat;
+}
+
+// Примеры использования функций
+changeStage("Этап 1");
+changeWhat("Что делать:\n Задайте размеры офиса.");
+// Функция для отключения элемента
+
+
+//////////Этап 1////////////////
+function changeStage2()
+{
+    changeStage("Этап 2");
+    changeWhat("Что делать:\n Нарисуйте кабинеты.");
+}*/

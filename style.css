@@ -32,6 +32,12 @@ section{
   flex-direction: column;
   align-items: center;
 }
+#stagewhat{
+  margin-right: 35px;
+}
+#what{
+  margin-top: 15px;
+}
 .row .options{
   list-style: none;
   margin: 10px;
