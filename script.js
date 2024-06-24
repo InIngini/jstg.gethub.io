@@ -60,120 +60,125 @@ const drawOffice = () => {
     const width = parseInt(inputW.value);
     const height = parseInt(inputH.value);
 
-    // Проверка, не превышают ли размеры 100
-    if (width > 100 || height > 100) {
-        alert('У вас не может быть такой большой офис! Максимальный размер: 100x100');
-        return;
-    }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(inputW.value === "" || inputH.value === "")
+        alert("Создайте офис")
+    else
+    {   // Проверка, не превышают ли размеры 100
+        if (width > 100 || height > 100) {
+            alert('У вас не может быть такой большой офис! Максимальный размер: 100x100');
+            return;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    tableCoordinates.slice(0);
-    lastTableNumber=0;
+        roomCoordinates.slice(0);
+        lastTableNumber=0;
 
-    if (width<=30&&height<=30)
-    {
-        ctx.strokeRect(50, 50, width*22, height*22);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*22,
-            y2: 50+height*22
+        if (width<=30&&height<=30)
+        {
+            ctx.strokeRect(50, 50, width*22, height*22);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*22,
+                y2: 50+height*22
+                });
+        }
+        else if (width<=50&&height<=50)
+        {
+            ctx.strokeRect(50, 50, width*13, height*13);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*13,
+                y2: 50+height*13
             });
+        }
+        else if ((width<=70&&width>50)&&height<=50){
+            ctx.strokeRect(50, 50, width*13, height*13);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*13,
+                y2: 50+height*13
+            });
+        }
+        else if ((width<=70&&width>30)&&height<=50){
+            ctx.strokeRect(50, 50, width*17, height*17);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*17,
+                y2: 50+height*17
+            });
+        }
+        else if ((width<=100&&width>70)&&height<=50){
+            ctx.strokeRect(50, 50, width*13, height*13);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*13,
+                y2: 50+height*13
+            });
+        }
+        else if ((width<=100&&width>70)&&height<=60){
+            ctx.strokeRect(50, 50, width*12, height*12);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*12,
+                y2: 50+height*12
+            });
+        }
+        else if (width<=70&&height<=70){
+            ctx.strokeRect(50, 50, width*10, height*10);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*10,
+                y2: 50+height*10
+            });
+        }
+        else if ((width<=100&&width>70)&&height<=70){
+            ctx.strokeRect(50, 50, width*10, height*10);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*11,
+                y2: 50+height*11
+            });
+        }
+        else if ((width<=100&&width>70)&&height<=80){
+            ctx.strokeRect(50, 50, width*9, height*9);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*9,
+                y2: 50+height*9
+            });
+        }
+        else if (width<=100&&height<=100){
+            ctx.strokeRect(50, 50, width*7, height*7);
+            roomCoordinates.push({
+                number: 0,
+                x1: 50,
+                y1: 50,
+                x2: 50+width*7,
+                y2: 50+height*7
+            });
+        }
+        document.querySelector('#rowroom').style.display = 'flex';
+        canvas.focus();
+        addToHistory();
     }
-    else if (width<=50&&height<=50)
-    {
-        ctx.strokeRect(50, 50, width*13, height*13);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*13,
-            y2: 50+height*13
-          });
-    }
-    else if ((width<=70&&width>50)&&height<=50){
-        ctx.strokeRect(50, 50, width*13, height*13);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*13,
-            y2: 50+height*13
-          });
-    }
-    else if ((width<=70&&width>30)&&height<=50){
-        ctx.strokeRect(50, 50, width*17, height*17);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*17,
-            y2: 50+height*17
-          });
-    }
-    else if ((width<=100&&width>70)&&height<=50){
-        ctx.strokeRect(50, 50, width*13, height*13);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*13,
-            y2: 50+height*13
-          });
-    }
-    else if ((width<=100&&width>70)&&height<=60){
-        ctx.strokeRect(50, 50, width*12, height*12);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*12,
-            y2: 50+height*12
-          });
-    }
-    else if (width<=70&&height<=70){
-        ctx.strokeRect(50, 50, width*10, height*10);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*10,
-            y2: 50+height*10
-          });
-    }
-    else if ((width<=100&&width>70)&&height<=70){
-        ctx.strokeRect(50, 50, width*10, height*10);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*11,
-            y2: 50+height*11
-          });
-    }
-    else if ((width<=100&&width>70)&&height<=80){
-        ctx.strokeRect(50, 50, width*9, height*9);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*9,
-            y2: 50+height*9
-          });
-    }
-    else if (width<=100&&height<=100){
-        ctx.strokeRect(50, 50, width*7, height*7);
-        tableCoordinates.push({
-            number: 0,
-            x1: 50,
-            y1: 50,
-            x2: 50+width*7,
-            y2: 50+height*7
-          });
-    }
-    canvas.focus();
-    addToHistory();
 };
 
 // Слушатель события щелчка для кнопки
@@ -206,6 +211,36 @@ document.addEventListener('keydown', (e) => {
       shiftKey = false;
     }
   });
+
+//Рисование кабинета
+const drawRoom = (e) => {
+    //ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+    if (shiftKey) {
+        // Рассчитать размеры прямоугольника, чтобы стороны были параллельны осям
+        const width = e.offsetX - prevMouseX;
+        const height = e.offsetY - prevMouseY;
+        if(width>=0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+        else if(width<0&&height>=0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width>=0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,-width);
+        }
+        else if(width<0&&height<0)
+        {// Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY,width,width);
+        }
+      } else {
+        // Обычное рисование прямоугольника
+        ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
+      }
+}
+
 // Рисование прямоугольника
 const drawRect = (e) => {
     //ctx.strokeRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
@@ -362,7 +397,59 @@ const drawText = (e) => {
         }
     });
 };
-  
+const drawTextRoom = (mouseX, mouseY,e) => {
+
+    // Создание текстового поля
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.style.position = 'absolute';
+    input.style.left = mouseX+ 'px';
+    input.style.top = mouseY  + 'px';
+    input.style.width = '100px';
+    input.style.font='12px Arial';
+    input.style.fillStyle = 'black';
+
+    // Установка начального значения текста
+    input.value = '№';
+
+    // Добавление текстового поля в документ
+    document.body.appendChild(input);
+    input.focus();
+
+    // Добавить событие для элемента
+    input.addEventListener('keypress', (e) => {
+        if (!/[0-9]/.test(e.key)) {
+            e.preventDefault();
+        }
+    });
+    
+    // Обработчик события нажатия клавиши Enter для завершения редактирования текста
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            // Создание текстового узла для отображения текста
+            const text = input.value;
+            numberRoomNow=input.value;
+            // Добавление текстового узла на холст
+            ctx.font = '12px Arial';
+            ctx.fillStyle = 'black';
+            ctx.fillText(text, mouseX- canvas.offsetLeft, mouseY- canvas.offsetTop+15);
+            
+            roomCoordinates.push({//Запись в табличку
+                number: numberRoomNow.replace('№', ''),
+                x1: prevMouseX,
+                y1: prevMouseY,
+                x2: e.offsetX,
+                y2: e.offsetY
+              });
+              addToHistory()
+              // Удаление текстового поля
+            document.body.removeChild(input);
+
+            canvas.focus(); 
+            
+        }
+    });
+};
 let lastTableNumber = 0; // Переменная для хранения номера последнего добавленного стола
 
 const drawTable = (e) => {
@@ -514,6 +601,7 @@ const drawLadder = (e) => {
 // Массив для хранения истории изменений
 let history = [];
 let historyIndex = -1;
+let roomChet = 0; 
 
 function removAfterToHistory(){
     // Получаем текущий индекс в истории
@@ -522,7 +610,12 @@ function removAfterToHistory(){
     // Если есть значения после текущего, удаляем их из истории
     if (currentIndex < history.length - 1) {
         history = history.slice(0, currentIndex + 1);
+        if (stage == 1) {
+            roomCoordinates.splice(-roomChet);
+            roomChet=0;
+        }
     }
+    
 }
 
 // Функция для добавления состояния в историю
@@ -538,8 +631,11 @@ function undo() {
   if (historyIndex > -1) {
     historyIndex--;
     ctx.putImageData(history[historyIndex], 0, 0);
-    
+    if (stage == 1) {
+        roomChet++;
+    }
   }
+  
 }
 
 // Функция для повтора изменений (Ctrl+Y)
@@ -547,9 +643,11 @@ function redo() {
   if (historyIndex < history.length - 1) {
     historyIndex++;
     ctx.putImageData(history[historyIndex], 0, 0);
+    if (stage == 1) {
+        roomChet--;
+    }
   }
 }
-
 
 
 // Состояние нажатия клавиш
@@ -623,6 +721,18 @@ const startDraw = (e) => {
       
         lastTableNumber++;
       }
+    else if (selectedTool === "room"){
+        const roomZero = roomCoordinates[0];
+        if(Math.abs(prevMouseX-roomZero.x1)<15)
+            prevMouseX = roomZero.x1;
+        if(Math.abs(prevMouseX-roomZero.x2)<15)
+            prevMouseX = roomZero.x2;
+        if(Math.abs(prevMouseY-roomZero.y1)<15)
+            prevMouseY = roomZero.y1;
+        if(Math.abs(prevMouseY-roomZero.y2)<15)
+            prevMouseY = roomZero.y2;
+    }
+    
 }
 
 // Рисование
@@ -689,15 +799,18 @@ clearCanvas.addEventListener("click", () => {
 // Обработка события нажатия на кнопку сохранения изображения
 saveImg.addEventListener("click", () => {
     // Получение координат выделенной области
-  const { n, x1, y1, x2, y2 } = tableCoordinates[0];
-  // Вычисление размеров выделенной области
-  const width = x2+50;
-  const height = y2+50;
-  savedImage = ctx.getImageData(0, 0, width, height);
-  
-  canvas.width = width;
-  canvas.height = height;
-  
+    const { n, x1, y1, x2, y2 } = roomCoordinates[0];
+    // Вычисление размеров выделенной области
+    const width2 = x2+50;
+    const height2 = y2+50;
+    savedImage = ctx.getImageData(0, 0, width2, height2);
+    
+    const width1 = canvas.width;
+    const height1 = canvas.height;
+
+    canvas.width = width2;
+    canvas.height = height2;
+    
     if (savedImage) {
         ctx.putImageData(savedImage, 0, 0);
     }
@@ -706,6 +819,29 @@ saveImg.addEventListener("click", () => {
     link.download = `${Date.now()}.jpg`; // Передача текущей даты как значения скачивания ссылки
     link.href = canvas.toDataURL(); // Передача данных холста как значения ссылки
     link.click(); // Клик по ссылке для скачивания изображения
+
+    // const byteString = atob(imageUrl.substring("data:image/png;base64,".length));
+    // const bytes = new Uint8Array(byteString.length);
+    // for (let i = 0; i < byteString.length; i++) {
+    // bytes[i] = byteString.charCodeAt(i);
+    // }
+    // const sqlite3 = require("sqlite3").verbose();
+    // const db = new sqlite3.Database("database.sqlite");
+
+    // db.run("INSERT INTO images (image) VALUES (?)", [bytes], (err) => {
+    //     if (err) {
+    //         // Обработка ошибки
+    //     } else {
+    //         // Изображение успешно сохранено в базе данных
+    //     }
+    // });
+
+    canvas.width = width1;
+    canvas.height = height1;
+    
+    if (savedImage) {
+        ctx.putImageData(savedImage, 0, 0);
+    }
 });
 
 // Обработка события нажатия кнопки мыши на холсте
@@ -715,16 +851,19 @@ canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
 
 const tableCoordinates = [];
-
+const roomCoordinates = [];
+let roomNow;
+let numberRoomNow;
 
 function handleMouseUp(e) {
     removAfterToHistory();
-    addToHistory();
+    
     if (selectedTool === "table") {
 
       // Сохранение координат стола в массиве
       tableCoordinates.push({
         number: lastTableNumber,
+        numberroom: roomNow, 
         x1: prevMouseX,
         y1: prevMouseY,
         x2: e.offsetX,
@@ -732,33 +871,92 @@ function handleMouseUp(e) {
       });
       //alert(prevMouseX+" "+prevMouseY+" "+e.offsetX+" "+e.offsetY);
     }
-  
     isDrawing = false;
+    if (selectedTool == "room" &&  Math.abs(prevMouseX-e.offsetX)>30 && Math.abs(prevMouseY-e.offsetY)>30)
+    {
+        const mouseX = prevMouseX - (2*(prevMouseX-e.offsetX)/3);
+        const mouseY = prevMouseY +canvas.offsetTop- (2*(prevMouseY-e.offsetY)/3);
+        drawTextRoom(mouseX,mouseY,e);
+    }
+    else
+        addToHistory();
   }
 // Обработка события отпускания кнопки мыши на холсте  
 canvas.addEventListener("mouseup", handleMouseUp);
   
 //////Этапы/////
-/*
-// Функция для изменения содержимого элемента "Этап"
-function changeStage(newStage) {
-  stageElement.innerHTML = newStage;
-}
 
-// Функция для изменения содержимого элемента "Что сделать"
-function changeWhat(newWhat) {
-  whatElement.innerHTML = newWhat;
-}
+const buttonWhat = document.getElementById("buttonWhat");
+// Слушатель события щелчка для кнопки
+buttonWhat.addEventListener('click', vpered);
 
-// Примеры использования функций
-changeStage("Этап 1");
-changeWhat("Что делать:\n Задайте размеры офиса.");
-// Функция для отключения элемента
+const buttonWhatObratno = document.getElementById("buttonWhatObratno");
+// Слушатель события щелчка для кнопки
+buttonWhatObratno.addEventListener('click', obratno);
 
-
-//////////Этап 1////////////////
-function changeStage2()
+let stage = 0;
+vpered();
+        
+function vpered()
 {
-    changeStage("Этап 2");
-    changeWhat("Что делать:\n Нарисуйте кабинеты.");
-}*/
+    if(stage==1 && !roomCoordinates[0])
+    {
+        alert("Создайте офис");
+    }
+    else if(stage!=3)
+    {
+        stage=stage+1;
+        changeStage();
+    }
+    
+}
+function obratno()
+{
+    if(stage!=1)
+    {
+        stage=stage-1;
+        changeStage();
+    }    
+    
+}
+
+function changeStage() {
+
+    // Скрытие всех дивов
+    document.querySelectorAll('.row').forEach(row => row.style.display = 'none');
+    document.querySelector('#stagewhat').style.display = 'flex';
+    document.querySelector('#wh').style.display = 'flex';
+
+    history = [];
+    historyIndex = -1;
+
+    // Отображение дивов для текущего этапа
+    switch (stage) {
+      case 1:
+        stageElement.innerHTML = "Этап 1";
+        whatElement.innerHTML = "задайте размеры офиса <p>и нарисуйте кабинеты</p>";
+        document.querySelector('#divsize').style.display = 'flex';
+        //document.querySelector('#rowroom').style.display = 'flex';
+        break;
+      case 2:
+        //тут надо засунуть сохранение промежуточных данных в бд
+        stageElement.innerHTML = "Этап 2";
+        whatElement.innerHTML = "создайте интерьер <p>и расставьте столы</p>";  
+        const rows = document.querySelectorAll('.row');
+        for (let i = 0; i < rows.length; i++) {
+        rows[i].style.display = 'flex';
+        }
+        document.querySelector('#divsize').style.display = 'none';
+        document.querySelector('#rowroom').style.display = 'none';
+        document.querySelector('.row.buttons').style.display = 'none';
+        break;
+      case 3:
+        stageElement.innerHTML = "Этап 3";
+        whatElement.innerHTML = "сохраните</p>";  
+        document.querySelector('.row.buttons').style.display = 'flex';
+        break;
+    }
+  
+    
+  }
+  

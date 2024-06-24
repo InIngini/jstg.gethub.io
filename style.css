@@ -65,8 +65,8 @@ section{
   margin-left: 5px;
   margin-top: 15px;
 }
-.row #wh{
-  width: 100%;
+.row button{
+  width: 80px;
   color: #fff;
   border: none;
   outline: none;
@@ -80,6 +80,23 @@ section{
   cursor: pointer;
   background: #FF4D4D;
   border: 1px solid #FF4D4D;
+}
+.row #buttonWhat, #buttonWhatObratno{
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#room {
+  margin-top: 15px;
+}
+#wh{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#what{
+  text-align: center;
 }
 .row .options .option{
   display: flex;
@@ -158,6 +175,7 @@ section{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 15px;
 }
 .buttons button{
   width: 100%;
