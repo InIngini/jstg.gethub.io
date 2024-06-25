@@ -18,7 +18,7 @@
           <label class="title" id="stage">Этап 1</label>
           <label>Что сделать: </label>
           <label id="what"></label>
-          <button id="buttonWhat">Готово</button>
+          <button id="buttonWhat">Следующий</button>
           <button id="buttonWhatObratno">Обратно</button>
         </div>
         <div class="row" id="divsize">
@@ -35,6 +35,14 @@
           </div>
           <button id="wh">Построить</button>
         </div>
+        <!-- <div class="row" id="numberroom">
+          <label class="title">Кабинет</label>
+          <label>№</label>
+          <input id="num" value="0" list="room-list">
+          <label style="font-family: Arial, sans-serif; font-size: 10px; color: gray;">(0 для полной схемы)</label>
+          <button id="btnnum">Приблизить</button>
+          <datalist id="room-list"></datalist>
+        </div> -->
         <div class="row" id="rowroom">
           <label class="title">Элементы</label>
           <ul class="options room">
@@ -53,8 +61,8 @@
           </ul>
         </div>
         <div class="row">
-          <label class="title">Предметы</label>
-          <ul class="options">
+          <label class="title" style="margin-left: 15px;">Предметы</label>
+          <ul class="options" id="predmet">
             <li class="option tool" id="table">
               <img src="icons/table.svg" alt="">
               <span>Стол</span>
@@ -66,8 +74,7 @@
             <li class="option tool" id="f">
               <img src="icons/f.svg" alt="">
               <span>Ж</span>
-            </li>
-            
+            </li> 
           </ul>
         </div>
         <div class="row">
