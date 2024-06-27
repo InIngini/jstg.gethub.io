@@ -1,261 +1,300 @@
-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: #FF4D4D;
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: #FF4D4D;
 }
-.container{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-  padding: 10px;
-  max-width: 1050px;
-  align-items: center;
-  justify-content: center;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 10px;
+	padding: 10px;
+	max-width: 1050px;
+	align-items: center;
+	justify-content: center;
 }
-section{
-  background: #fff;
-  border-radius: 7px;
+
+section {
+	background: #fff;
+	border-radius: 7px;
 }
-.tools-board{
-  
-  justify-content: center;
-  width: 90vw;
-  padding: 15px 22px 0;
-  display: flex;
-  flex-direction: row;
+
+.tools-board {
+	justify-content: center;
+	width: 90vw;
+	padding: 15px 22px 0;
+	display: flex;
+	flex-direction: row;
 }
-#stagewhat .title{
-  margin-bottom: 5px;
+
+#stagewhat .title {
+	margin-bottom: 5px;
 }
-#numberroom .title{
-  margin-bottom: 5px;
+
+#numberroom .title {
+	margin-bottom: 5px;
 }
 
 #room-list {
   /* Настройки внешнего вида списка */
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-  color: #000000 ;
-  background-color: #ffffff;
-  width: 40px;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	background-color: #ffffff;
+	width: 40px;
 }
 
 #room-list option {
   /* Настройки внешнего вида отдельных элементов списка */
-  padding: 5px;
-  margin: 2px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+	padding: 5px;
+	margin: 2px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 #room-list option:hover {
   /* Настройки внешнего вида элемента при наведении */
-  background-color: #FF4D4D;
+	background-color: #FF4D4D;
 }
 
-.row{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#stagewhat{
-  margin-right: 35px;
-}
-#what{
-  margin-top: 15px;
-}
-#numberroom label{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.row .options{
-  list-style: none;
-  margin: 10px;
-  margin-right: 35px;
+.row {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.row #size{
-  display: flex;
-  flex-direction: row;
-  margin-top: 15px;
+#stagewhat {
+	margin-right: 35px;
 }
-.row #size div{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.row #size div label{
-  width: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-left: 5px;
-  margin-top: 15px;
-}
-#num{
-  width: 40px;
-  margin-left: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-#btnnum
-{
-  margin-left: -1px;
 
+#what {
+	margin-top: 15px;
 }
-.row #size div input{
-  width: 40px;
-  margin-left: 5px;
-  margin-top: 15px;
+
+#numberroom label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.row button{
-  width: 90px;
-  color: #fff;
-  border: none;
-  outline: none;
-  padding: 4px 0;
-  font-size: 0.9rem;
-  margin-top: 24px;
-  margin-bottom: 13px;
-  margin-left: 15px;
-  background: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background: #FF4D4D;
-  border: 1px solid #FF4D4D;
+
+.row .options {
+	list-style: none;
+	margin: 10px;
+	margin-right: 35px;
 }
-.row #buttonWhat, #buttonWhatObratno{
-  margin-left: 0px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+
+.row #size {
+	display: flex;
+	flex-direction: row;
+	margin-top: 15px;
 }
+
+.row #size div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.row #size div label {
+	width: 20px;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5px;
+	margin-top: 15px;
+}
+
+#num {
+	width: 40px;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#btnnum {
+	margin-left: -1px;
+}
+
+.row #size div input {
+	width: 40px;
+	margin-left: 5px;
+	margin-top: 15px;
+}
+
+.row button {
+	width: 90px;
+	color: #fff;
+	border: none;
+	outline: none;
+	padding: 4px 0;
+	font-size: 0.9rem;
+	margin-top: 24px;
+	margin-bottom: 13px;
+	margin-left: 15px;
+	background: none;
+	border-radius: 4px;
+	cursor: pointer;
+	background: #FF4D4D;
+	border: 1px solid #FF4D4D;
+}
+
+.row #buttonWhat, #buttonWhatObratno {
+	margin-left: 0px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
 #room {
-  margin-top: 15px;
+	margin-top: 15px;
 }
-#wh{
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+#wh {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-#what{
-  text-align: center;
+
+#what {
+	text-align: center;
 }
-.row .options .option{
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  margin-bottom: 10px;
+
+.row .options .option {
+	display: flex;
+	cursor: pointer;
+	align-items: center;
+	margin-bottom: 10px;
 }
-.option:is(:hover, .active) img{
-  filter: invert(51%) sepia(77%) saturate(4915%) hue-rotate(345deg) brightness(100%) contrast(101%);
+
+.option:is(:hover, .active) img {
+	filter: invert(51%) sepia(77%) saturate(4915%) hue-rotate(345deg) brightness(100%) contrast(101%);
 }
-.option :where(span, label){
-  color: #5A6168;
-  cursor: pointer;
-  padding-left: 10px;
+
+.option :where(span, label) {
+	color: #5A6168;
+	cursor: pointer;
+	padding-left: 10px;
 }
-.option:is(:hover, .active) :where(span, label){
-  color: #FF4D4D;
+
+.option:is(:hover, .active) :where(span, label) {
+	color: #FF4D4D;
 }
-.option #size-slider{
-  width: 100%;
-  height: 5px;
-  margin-top: 10px;
-  accent-color: #FF4D4D; 
+
+.option #size-slider {
+	width: 100%;
+	height: 5px;
+	margin-top: 10px;
+	accent-color: #FF4D4D;
 }
-.colors .options{
-  display: flex;
-  justify-content: space-between;
+
+.colors .options {
+	display: flex;
+	justify-content: space-between;
 }
-.colors .option{
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  margin-top: 3px;
-  position: relative;
+
+.colors .option {
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	margin-top: 3px;
+	position: relative;
 }
+
 .row.colors .options {
-  margin-right: 40px;
-  margin-left: -5px;
+	margin-right: 40px;
+	margin-left: -5px;
 }
-.colors .option:nth-child(1){
-  background-color: #fff;
-  border: 1px solid #bfbfbf;
+
+.colors .option:nth-child(1) {
+	background-color: #fff;
+	border: 1px solid #bfbfbf;
 }
-.colors .option:nth-child(2){
-  background-color: #000;
+
+.colors .option:nth-child(2) {
+	background-color: #000;
 }
-.colors .option:nth-child(3){
-  background-color: #E02020;
+
+.colors .option:nth-child(3) {
+	background-color: #E02020;
 }
-.colors .option:nth-child(4){
-  background-color: #6DD400;
+
+.colors .option:nth-child(4) {
+	background-color: #6DD400;
 }
-.colors .option:nth-child(5){
-  background-color: #184af0;
+
+.colors .option:nth-child(5) {
+	background-color: #184af0;
 }
-.colors .option.selected::before{
-  position: absolute;
-  content: "";
-  top: 50%;
-  left: 50%;
-  height: 12px;
-  width: 12px;
-  background: inherit;
-  border-radius: inherit;
-  border: 2px solid #fff;
-  transform: translate(-50%, -50%);
+
+.colors .option.selected::before {
+	position: absolute;
+	content: "";
+	top: 50%;
+	left: 50%;
+	height: 12px;
+	width: 12px;
+	background: inherit;
+	border-radius: inherit;
+	border: 2px solid #fff;
+	transform: translate(-50%, -50%);
 }
-.colors .option:first-child.selected::before{
-  border-color: #ccc;
+
+.colors .option:first-child.selected::before {
+	border-color: #ccc;
 }
-.option #color-picker{
-  opacity: 0;
-  cursor: pointer;
+
+.option #color-picker {
+	opacity: 0;
+	cursor: pointer;
 }
-.buttons{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
+
+.buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 15px;
 }
-.buttons button{
-  width: 100%;
-  color: #fff;
-  border: none;
-  outline: none;
-  padding: 11px 0;
-  font-size: 0.9rem;
-  margin-bottom: 13px;
-  background: none;
-  border-radius: 4px;
-  cursor: pointer;
+
+.buttons button {
+	width: 100%;
+	color: #fff;
+	border: none;
+	outline: none;
+	padding: 11px 0;
+	font-size: 0.9rem;
+	margin-bottom: 13px;
+	background: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
-.buttons .clear-canvas{
-  color: #6C757D;
-  border: 1px solid #6C757D;
-  transition: all 0.3s ease;
+
+.buttons .clear-canvas {
+	color: #6C757D;
+	border: 1px solid #6C757D;
+	transition: all 0.3s ease;
 }
-.clear-canvas:hover{
-  color: #fff;
-  background: #6C757D;
+
+.clear-canvas:hover {
+	color: #fff;
+	background: #6C757D;
 }
-.buttons .save-img{
-  background: #FF4D4D;
-  border: 1px solid #FF4D4D;
+
+.buttons .save-img {
+	background: #FF4D4D;
+	border: 1px solid #FF4D4D;
 }
-.drawing-board{
-  overflow: hidden;
-  width: 98vw;
-  height: 100vh;
+
+.drawing-board {
+	overflow: hidden;
+	width: 98vw;
+	height: 100vh;
 }
-.drawing-board canvas{
-  width: 100%;
-  height: 100%;
+
+.drawing-board canvas {
+	width: 100%;
+	height: 100%;
 }

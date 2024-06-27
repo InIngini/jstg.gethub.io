@@ -6,14 +6,25 @@
     <title>Lego</title>
     <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
+
+    <!-- <script src="script.js" defer></script> -->
+    <script src="scripts/1settings.js" defer></script>
+    <script src="scripts/2stage.js" defer></script>
+    <script src="scripts/3size.js" defer></script>
+    <script src="scripts/4click.js" defer></script>
+    <script src="scripts/5draw.js" defer></script>
+    <script src="scripts/6room.js" defer></script>
+    <script src="scripts/7shift_ctrl.js" defer></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- <link href="/iconka2.ico" rel="shortcut icon" runat="server" type="image/x-icon" />
-    <link href="/iconka2.ico" rel="icon" runat="server" type="image/ico" /> -->
+
+    <link href="iconka.ico" rel="shortcut icon" runat="server" type="image/x-icon" />
+    <link href="iconka.ico" rel="icon" runat="server" type="image/ico">
+
   </head>
   <body>
     <div class="container">
       <section class="tools-board">
+        <!-- Этап -->
         <div class="row" id="stagewhat">
           <label class="title" id="stage">Этап 1</label>
           <label>Что сделать: </label>
@@ -21,6 +32,7 @@
           <button id="buttonWhat">Следующий</button>
           <button id="buttonWhatObratno">Обратно</button>
         </div>
+        <!-- Этап 1. Размер офиса -->
         <div class="row" id="divsize">
           <label class="title">Размер</label>
           <div id="size">
@@ -35,14 +47,7 @@
           </div>
           <button id="wh">Построить</button>
         </div>
-        <!-- <div class="row" id="numberroom">
-          <label class="title">Кабинет</label>
-          <label>№</label>
-          <input id="num" value="0" list="room-list">
-          <label style="font-family: Arial, sans-serif; font-size: 10px; color: gray;">(0 для полной схемы)</label>
-          <button id="btnnum">Приблизить</button>
-          <datalist id="room-list"></datalist>
-        </div> -->
+        <!-- Этап 1. Элементы -->
         <div class="row" id="rowroom">
           <label class="title">Элементы</label>
           <ul class="options room">
@@ -58,8 +63,22 @@
               <img src="icons/ladder.svg" alt="">
               <span>Лестница</span>
             </li>
+            <li class="option tool" id="line">
+              <img src="icons/line.svg" alt="">
+              <span>Линия</span>
+            </li>
           </ul>
         </div>
+        <!-- Этап 2. Номер кабинета
+        <div class="row" id="numberroom">
+          <label class="title">Кабинет</label>
+          <label>№</label>
+          <input id="num" value="0" list="room-list">
+          <label style="font-family: Arial, sans-serif; font-size: 10px; color: gray;">(0 для полной схемы)</label>
+          <button id="btnnum">Приблизить</button>
+          <datalist id="room-list"></datalist>
+        </div> -->
+        <!-- Этап 2. Предметы -->
         <div class="row">
           <label class="title" style="margin-left: 15px;">Предметы</label>
           <ul class="options" id="predmet">
@@ -75,8 +94,17 @@
               <img src="icons/f.svg" alt="">
               <span>Ж</span>
             </li> 
+            <li class="option tool" id="door">
+              <img src="icons/door.svg" alt="">
+              <span>Дверь</span>
+            </li>
+            <li class="option tool" id="ladder">
+              <img src="icons/ladder.svg" alt="">
+              <span>Лестница</span>
+            </li>
           </ul>
         </div>
+        <!-- Этап 2. Фигуры -->
         <div class="row">
           <label class="title">Фигуры</label>
           <ul class="options">
@@ -102,6 +130,7 @@
             </li>
           </ul>
         </div>
+        <!-- Этап 2. Кисть -->
         <div class="row">
           <label class="title">Кисть</label>
           <ul class="options">
@@ -118,6 +147,7 @@
             </li>
           </ul>
         </div>
+        <!-- Этап 2. Цвет -->
         <div class="row colors">
           <label class="title">Цвета</label>
           <ul class="options">
@@ -130,6 +160,7 @@
             </li>
           </ul>
         </div>
+        <!-- Этап 3. Кнопки -->
         <div class="row buttons">
           <button class="clear-canvas">Очистить холст</button>
           <button class="save-img">Сохранить</button>
