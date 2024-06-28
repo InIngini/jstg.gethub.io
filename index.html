@@ -16,7 +16,6 @@
     <script src="scripts/6room.js" defer></script>
     <script src="scripts/7shift_ctrl.js" defer></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src='sql-wasm.js'></script>
 
     <link href="iconka.ico" rel="shortcut icon" runat="server" type="image/x-icon" />
     <link href="iconka.ico" rel="icon" runat="server" type="image/ico">
@@ -165,6 +164,13 @@
         <div class="row buttons">
           <button class="clear-canvas">Очистить холст</button>
           <button class="save-img">Сохранить</button>
+        </div>
+        <!-- Этап 3. Кнопки -->
+        <div class="row" id="rowinput">
+          <label>Скопируйте для бота</label>
+          <label style="font-family: Arial, sans-serif; font-size: 10px; color: gray;">(не забудьте ему отправить)</label>
+          <input readonly id="copyInput"></input>
+          <button id="copyButton">Скопировать</button>
         </div>
       </section>
       <section class="drawing-board">
