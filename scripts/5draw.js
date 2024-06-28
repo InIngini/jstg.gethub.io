@@ -260,6 +260,18 @@ const drawTextRoom = (mouseX, mouseY, e) => {
                         ctx.fillStyle = 'black';
                         ctx.fillText(text, mouseX - canvas.offsetLeft, mouseY - canvas.offsetTop + 15);
 
+                        // Сохраните координаты, когда prevMouseX больше endMouseX или prevMouseY больше endMouseY
+                        if (prevMouseX > endMouseX) {
+                            let temp = prevMouseX;
+                            prevMouseX = endMouseX;
+                            endMouseX = temp;
+                        }
+
+                        if (prevMouseY > endMouseY) {
+                            let temp = prevMouseY;
+                            prevMouseY = endMouseY;
+                            endMouseY = temp;
+                        }
                         roomCoordinates.push({ //Запись в табличку
                             number: numberRoomNow.replace('№', ''),
                             x1: prevMouseX,
@@ -301,6 +313,18 @@ const drawTextRoom = (mouseX, mouseY, e) => {
                         ctx.fillStyle = 'black';
                         ctx.fillText(text, mouseX - canvas.offsetLeft, mouseY - canvas.offsetTop + 15);
 
+                        // Сохраните координаты, когда prevMouseX больше endMouseX или prevMouseY больше endMouseY
+                        if (prevMouseX > endMouseX) {
+                            let temp = prevMouseX;
+                            prevMouseX = endMouseX;
+                            endMouseX = temp;
+                        }
+
+                        if (prevMouseY > endMouseY) {
+                            let temp = prevMouseY;
+                            prevMouseY = endMouseY;
+                            endMouseY = temp;
+                        }
                         roomCoordinates.push({ //Запись в табличку
                             number: numberRoomNow.replace('№', ''),
                             x1: prevMouseX,
@@ -338,36 +362,29 @@ const drawTextRoom = (mouseX, mouseY, e) => {
 const drawTable = (e) => {
     ctx.beginPath(); // Создание нового пути для рисования прямоугольника
     
-    // if (shiftKey) {
-    //     // Рассчитать размеры прямоугольника, чтобы стороны были параллельны осям
-    //     const width = endMouseX - prevMouseX;
-    //     const height = endMouseY - prevMouseY;
-    //     if (width >= 0 && height >= 0) { // Нарисовать прямоугольник с заданными размерами
-    //         ctx.strokeRect(prevMouseX, prevMouseY, width, width);
-    //     } else if (width < 0 && height >= 0) { // Нарисовать прямоугольник с заданными размерами
-    //         ctx.strokeRect(prevMouseX, prevMouseY, width, -width);
-    //     } else if (width >= 0 && height < 0) { // Нарисовать прямоугольник с заданными размерами
-    //         ctx.strokeRect(prevMouseX, prevMouseY, width, -width);
-    //     } else if (width < 0 && height < 0) { // Нарисовать прямоугольник с заданными размерами
-    //         ctx.strokeRect(prevMouseX, prevMouseY, width, width);
-    //     }
-    // } else {
-    //     // Обычное рисование прямоугольника
-    //     ctx.strokeRect(endMouseX, endMouseY, prevMouseX - endMouseX, prevMouseY - endMouseY);
-    // }
+    if (shiftKey) {
+        // Рассчитать размеры прямоугольника, чтобы стороны были параллельны осям
+        const width = endMouseX - prevMouseX;
+        const height = endMouseY - prevMouseY;
+        if (width >= 0 && height >= 0) { // Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY, width, width);
+        } else if (width < 0 && height >= 0) { // Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY, width, -width);
+        } else if (width >= 0 && height < 0) { // Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY, width, -width);
+        } else if (width < 0 && height < 0) { // Нарисовать прямоугольник с заданными размерами
+            ctx.strokeRect(prevMouseX, prevMouseY, width, width);
+        }
+    } else {
+        // Обычное рисование прямоугольника
+        ctx.strokeRect(endMouseX, endMouseY, prevMouseX - endMouseX, prevMouseY - endMouseY);
+    }
 
     let wtable, htable;
-    if(shiftKey)
-    {
-        wtable=1.5*increase;
-        htable=0.6*increase;
-    }
-    else
-    {
-        htable=1.5*increase;
-        wtable=0.6*increase;
-    }
-    ctx.rect(endMouseX, endMouseY, wtable, htable); // Создание прямоугольника в соответствии с положением указателя мыши
+    wtable=prevMouseX - endMouseX;
+    htable=prevMouseY - endMouseY;
+
+    //ctx.rect(endMouseX, endMouseY, wtable, htable); // Создание прямоугольника в соответствии с положением указателя мыши
     ctx.stroke(); // Отрисовка прямоугольника
 
     // Отрисовка текста по центру прямоугольника

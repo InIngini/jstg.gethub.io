@@ -20,13 +20,22 @@ const startDraw = (e) => {
         ctx.fillStyle = selectedColor; // Передача selectedColor как стиля заливки
         // Копирование данных холста и передача в качестве значения snapshot.. это предотвращает перетаскивание изображения
         snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        roomNow=0;
         if (selectedTool === "text") {
-
             isDrawing = false;
             drawText(e);
         } else if (selectedTool === "table") {
-            if (tableCoordinates.length > 0) {
-                lastTableNumber = tableCoordinates[tableCoordinates.length - 1].number;
+            // Найдите текущую комнату, в которую попадает курсор мыши
+            for (const room of roomCoordinates) {
+                if (room.number!=0 && prevMouseX >= room.x1 && prevMouseX <= room.x2 && prevMouseY >= room.y1 && prevMouseY <= room.y2) {
+                    roomZero = room;
+                    roomNow=room.number;
+                    break;
+                }
+            }
+            const tableInRoom = tableCoordinates.filter(table => table.numberroom === roomNow);
+            if (tableInRoom.length > 0) {
+                lastTableNumber = tableInRoom[tableInRoom.length - 1].number;
             } else {
                 lastTableNumber = 0;
             }
@@ -56,15 +65,45 @@ const drawing = (e) => {
     endMouseY = e.offsetY;
 
     if (selectedTool != 'null') {
-        const roomZero = roomCoordinates[0];
-        if (Math.abs(endMouseX - roomZero.x1) < 15 || endMouseX - roomZero.x1 < 0)
-            endMouseX = roomZero.x1;
-        if (Math.abs(endMouseX - roomZero.x2) < 15 || endMouseX - roomZero.x2 > 0)
-            endMouseX = roomZero.x2;
-        if (Math.abs(endMouseY - roomZero.y1) < 15 || endMouseY - roomZero.y1 < 0)
-            endMouseY = roomZero.y1;
-        if (Math.abs(endMouseY - roomZero.y2) < 15 || endMouseY - roomZero.y2 > 0)
-            endMouseY = roomZero.y2;
+        // const roomZero = roomCoordinates[0];
+        // if (Math.abs(endMouseX - roomZero.x1) < 15 || endMouseX - roomZero.x1 < 0)
+        //     endMouseX = roomZero.x1;
+        // if (Math.abs(endMouseX - roomZero.x2) < 15 || endMouseX - roomZero.x2 > 0)
+        //     endMouseX = roomZero.x2;
+        // if (Math.abs(endMouseY - roomZero.y1) < 15 || endMouseY - roomZero.y1 < 0)
+        //     endMouseY = roomZero.y1;
+        // if (Math.abs(endMouseY - roomZero.y2) < 15 || endMouseY - roomZero.y2 > 0)
+        //     endMouseY = roomZero.y2;
+        let roomZero = null;
+        if(selectedTool === "room" || selectedTool === "ladder")
+        {
+            roomZero=roomCoordinates[0];
+        }
+        else
+        {
+            // Найдите текущую комнату, в которую попадает курсор мыши
+            for (const room of roomCoordinates) {
+                if (room.number!=0 && prevMouseX >= room.x1 && prevMouseX <= room.x2 && prevMouseY >= room.y1 && prevMouseY <= room.y2) {
+                    roomZero = room;
+                    roomNow=room.number;
+                    break;
+                }
+            }
+            if(roomNow==0)
+                roomZero=roomCoordinates[0];
+        }
+        // Если текущая комната найдена, обновите границы
+        if (roomZero) {
+            if (Math.abs(endMouseX - roomZero.x1) < 15 || endMouseX - roomZero.x1 < 0)
+                endMouseX = roomZero.x1;
+            if (Math.abs(endMouseX - roomZero.x2) < 15 || endMouseX - roomZero.x2 > 0)
+                endMouseX = roomZero.x2;
+            if (Math.abs(endMouseY - roomZero.y1) < 15 || endMouseY - roomZero.y1 < 0)
+                endMouseY = roomZero.y1;
+            if (Math.abs(endMouseY - roomZero.y2) < 15 || endMouseY - roomZero.y2 > 0)
+                endMouseY = roomZero.y2;
+        }
+        
 
         if (selectedTool === "brush" || selectedTool === "eraser") {
             // Если выбранный инструмент - ластик, то установить стиль обводки в белый, 
@@ -105,6 +144,18 @@ function handleMouseUp(e) {
 
         if (selectedTool === "table") {
 
+            // Сохраните координаты, когда prevMouseX больше endMouseX или prevMouseY больше endMouseY
+            if (prevMouseX > endMouseX) {
+                let temp = prevMouseX;
+                prevMouseX = endMouseX;
+                endMouseX = temp;
+            }
+
+            if (prevMouseY > endMouseY) {
+                let temp = prevMouseY;
+                prevMouseY = endMouseY;
+                endMouseY = temp;
+            }
             // Сохранение координат стола в массиве
             tableCoordinates.push({
                 number: lastTableNumber,
@@ -202,40 +253,71 @@ saveImg.addEventListener("click", () => {
     const link = document.createElement("a"); // Создание элемента <a>
     link.download = `${Date.now()}.jpg`; // Передача текущей даты как значения скачивания ссылки
     link.href = canvas.toDataURL(); // Передача данных холста как значения ссылки
-    link.click(); // Клик по ссылке для скачивания изображения
+    //link.click(); // Клик по ссылке для скачивания изображения
 
-    // const imageUrl = link.href;
-    // const byteString = atob(imageUrl.substring("data:image/png;base64,".length));
-    // const bytes = new Uint8Array(byteString.length);
-    // for (let i = 0; i < byteString.length; i++) {
-    //     bytes[i] = byteString.charCodeAt(i);
-    // }
-    // alert(byteString);
-    // function saveTextAsFile(text, fileName) {
-    //     const blob = new Blob([text], { type: 'text/plain' });
-    //     const link = document.createElement('a');
-    //     link.href = URL.createObjectURL(blob);
-    //     link.download = fileName;
-    //     link.click();
-    // }
-    // function saveByteArrayAsTxtFile(byteArray, fileName) {
-    //     const text = String.fromCharCode.apply(null, byteArray);
-    //     saveTextAsFile(text, fileName);
-    // }
-    // saveByteArrayAsTxtFile(bytes, 'myfile.txt');
+    try{
+        
+        initSqlJs().then(function(SQL){
+            const db = new SQL.Database();
+            db.open('sqlite.db');
 
+            // Вставьте данные из `roomCoordinates` в `Office`
+            for (const room of roomCoordinates) {
+                db.run(`
+                    INSERT INTO Office (
+                        office_number,
+                        x1,
+                        y1,
+                        x2,
+                        y2
+                    )
+                    VALUES (?, ?, ?, ?, ?)
+                `, [
+                    room.number,
+                    room.x1,
+                    room.y1,
+                    room.x2,
+                    room.y2,
+                ]);
+            }
 
-    // const sqlite3 = require("sqlite3").verbose();
-    // const db = new sqlite3.Database("database.sqlite");
+            // Вставьте данные из `tableCoordinates` в `Seat`
+            for (const table of tableCoordinates) {
+                db.run(`
+                    INSERT INTO Seat (
+                        seat_number,
+                        id_office,
+                        x1,
+                        y1,
+                        x2,
+                        y2
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?)
+                `, [
+                    table.seat_number,
+                    table.number,
+                    table.x1,
+                    table.y1,
+                    table.x2,
+                    table.y2,
+                ]);
+            }
 
-    // db.run("INSERT INTO images (image) VALUES (?)", [bytes], (err) => {
-    //     if (err) {
-    //         // Обработка ошибки
-    //     } else {
-    //         // Изображение успешно сохранено в базе данных
-    //     }
-    // });
-
+            const code_base64 = link.href;
+            db.run(`
+                INSERT INTO Schema (
+                    image
+                )
+                VALUES (?)
+            `, [
+                code_base64
+            ]);
+        });
+    }
+    catch (error) {
+        alert ("Не сохранилось\n");
+        alert (error);
+    }
     //canvas.width = width1;
     //canvas.height = height1;
 
