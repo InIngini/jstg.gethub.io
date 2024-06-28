@@ -82,6 +82,7 @@ function changeStage() {
             document.querySelector('#divsize').style.display = 'none';
             document.querySelector('#rowroom').style.display = 'none';
             document.querySelector('.row.buttons').style.display = 'none';
+            document.querySelector('#rowinput').style.display = 'none';
             break;
         case 3:
             selectedTool = "null";

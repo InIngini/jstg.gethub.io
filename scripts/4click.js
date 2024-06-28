@@ -253,71 +253,57 @@ saveImg.addEventListener("click", () => {
     const link = document.createElement("a"); // Создание элемента <a>
     link.download = `${Date.now()}.jpg`; // Передача текущей даты как значения скачивания ссылки
     link.href = canvas.toDataURL(); // Передача данных холста как значения ссылки
-    //link.click(); // Клик по ссылке для скачивания изображения
+    link.click(); // Клик по ссылке для скачивания изображения
 
-    try{
-        
-        initSqlJs().then(function(SQL){
-            const db = new SQL.Database();
-            db.open('sqlite.db');
+    document.querySelector('#rowinput').style.display = 'flex';
 
-            // Вставьте данные из `roomCoordinates` в `Office`
-            for (const room of roomCoordinates) {
-                db.run(`
-                    INSERT INTO Office (
-                        office_number,
-                        x1,
-                        y1,
-                        x2,
-                        y2
-                    )
-                    VALUES (?, ?, ?, ?, ?)
-                `, [
-                    room.number,
-                    room.x1,
-                    room.y1,
-                    room.x2,
-                    room.y2,
-                ]);
-            }
+    const copyInput = document.getElementById("copyInput");
+    const copyButton = document.getElementById("copyButton");
 
-            // Вставьте данные из `tableCoordinates` в `Seat`
-            for (const table of tableCoordinates) {
-                db.run(`
-                    INSERT INTO Seat (
-                        seat_number,
-                        id_office,
-                        x1,
-                        y1,
-                        x2,
-                        y2
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?)
-                `, [
-                    table.seat_number,
-                    table.number,
-                    table.x1,
-                    table.y1,
-                    table.x2,
-                    table.y2,
-                ]);
-            }
+    // Отсортировать массив по номеру кабинета
+    tableCoordinates.sort((a, b) => a.numberroom - b.numberroom);
 
-            const code_base64 = link.href;
-            db.run(`
-                INSERT INTO Schema (
-                    image
-                )
-                VALUES (?)
-            `, [
-                code_base64
-            ]);
-        });
+    let text = "";
+
+    // Перебрать отсортированный массив
+    for (let i = 0; i < tableCoordinates.length; i++) {
+    const table = tableCoordinates[i];
+
+    // Начать новую строку для каждого кабинета
+    if (i === 0 || table.numberroom !== tableCoordinates[i - 1].numberroom) {
+        text += `\nКабинет ${table.numberroom}: `;
     }
-    catch (error) {
-        alert ("Не сохранилось\n");
-        alert (error);
+
+    // Добавить координаты стола в строку
+    text += `Стол ${table.number} (${table.x1}, ${table.y1}, ${table.x2}, ${table.y2}) `;
     }
+
+    copyInput.value = text;
+
+    copyButton.addEventListener("click", function() {
+        copyInput.select();
+        document.execCommand("copy");
+    });
+
+    //как выглядят таблицы
+    // tableCoordinates.push({
+    //     number: lastTableNumber,
+    //     numberroom: roomNow,
+    //     x1: prevMouseX,
+    //     y1: prevMouseY,
+    //     x2: endMouseX,
+    //     y2: endMouseY
+    // });
+    // roomCoordinates.push({ //Запись в табличку
+    //     number: numberRoomNow.replace('№', ''),
+    //     x1: prevMouseX,
+    //     y1: prevMouseY,
+    //     x2: endMouseX,
+    //     y2: endMouseY
+    // });
+
+
+
     //canvas.width = width1;
     //canvas.height = height1;
 
