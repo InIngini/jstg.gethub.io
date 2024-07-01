@@ -322,15 +322,15 @@ saveImg.addEventListener("click", () => {
 
     // Перебрать отсортированный массив
     for (let i = 0; i < tableCoordinates.length; i++) {
-    const table = tableCoordinates[i];
+        const table = tableCoordinates[i];
 
-    // Начать новую строку для каждого кабинета
-    if (i === 0 || table.numberroom !== tableCoordinates[i - 1].numberroom) {
-        text += `\nКабинет ${table.numberroom}: `;
-    }
+        // Начать новую строку для каждого кабинета
+        if (i === 0 || table.numberroom !== tableCoordinates[i - 1].numberroom) {
+            text += `\nКабинет ${table.numberroom}: `;
+        }
 
-    // Добавить координаты стола в строку
-    text += `Стол ${table.number} (${table.x1}, ${table.y1}, ${table.x2}, ${table.y2}) `;
+        // Добавить координаты стола в строку
+        text += `Стол ${table.number} (${table.x1 < 1000 ? (table.x1 < 100 ? "00" : "0") : ""}${table.x1}, ${table.y1 < 1000 ? (table.y1 < 100 ? "00" : "0") : ""}${table.y1}, ${table.x2 < 1000 ? (table.x2 < 100 ? "00" : "0") : ""}${table.x2}, ${table.y2 < 1000 ? (table.y2 < 100 ? "00" : "0") : ""}${table.y2}) `;
     }
 
     copyInput.value = text;
