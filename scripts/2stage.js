@@ -56,6 +56,7 @@ function changeStage() {
 
     history = [];
     historyIndex = -1;
+    selectedHistory = [];
 
     // Отображение дивов для текущего этапа
     switch (stage) {

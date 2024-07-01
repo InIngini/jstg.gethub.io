@@ -7,7 +7,7 @@ let roomNow = 0;
 let numberRoomNow;
 // Начало рисования
 const startDraw = (e) => {
-
+    removAfterToHistory();
     if (selectedTool != 'null' && isInput != true) {
         isDrawing = true;
         prevMouseX = e.offsetX; // Передача текущей позиции мыши X в качестве значения prevMouseX
@@ -40,18 +40,39 @@ const startDraw = (e) => {
                 lastTableNumber = 0;
             }
 
+            for (let i = 0; i < tableCoordinates.length; i++) {
+                const table = tableCoordinates[i];
+            
+                if(table.numberroom===roomNow)
+                {
+                    if (Math.abs(prevMouseX - table.x1) < 15)
+                    prevMouseX = table.x1;
+                    if (Math.abs(prevMouseX - table.x2) < 15)
+                    prevMouseX = table.x2;
+                    if (Math.abs(prevMouseY - table.y1) < 15)
+                    prevMouseY = table.y1;
+                    if (Math.abs(prevMouseY - table.y2) < 15)
+                    prevMouseY = table.y2;
+                }
+            }
+
             lastTableNumber++;
             drawTable();
         } else if (selectedTool === "room" || selectedTool === "rectangle" || selectedTool === "ladder") {
-            const roomZero = roomCoordinates[0];
-            if (Math.abs(prevMouseX - roomZero.x1) < 15)
-                prevMouseX = roomZero.x1;
-            if (Math.abs(prevMouseX - roomZero.x2) < 15)
-                prevMouseX = roomZero.x2;
-            if (Math.abs(prevMouseY - roomZero.y1) < 15)
-                prevMouseY = roomZero.y1;
-            if (Math.abs(prevMouseY - roomZero.y2) < 15)
-                prevMouseY = roomZero.y2;
+
+            for (let i = 0; i < roomCoordinates.length; i++) {
+                const room = roomCoordinates[i];
+              
+                if (Math.abs(prevMouseX - room.x1) < 15)
+                  prevMouseX = room.x1;
+                if (Math.abs(prevMouseX - room.x2) < 15)
+                  prevMouseX = room.x2;
+                if (Math.abs(prevMouseY - room.y1) < 15)
+                  prevMouseY = room.y1;
+                if (Math.abs(prevMouseY - room.y2) < 15)
+                  prevMouseY = room.y2;
+              }
+              
         }
         rectClear();
     }
@@ -75,7 +96,7 @@ const drawing = (e) => {
         // if (Math.abs(endMouseY - roomZero.y2) < 15 || endMouseY - roomZero.y2 > 0)
         //     endMouseY = roomZero.y2;
         let roomZero = null;
-        if(selectedTool === "room" || selectedTool === "ladder")
+        if(selectedTool === "room" || selectedTool === "ladder" || selectedTool==="rectangle")
         {
             roomZero=roomCoordinates[0];
         }
@@ -93,7 +114,7 @@ const drawing = (e) => {
                 roomZero=roomCoordinates[0];
         }
         // Если текущая комната найдена, обновите границы
-        if (roomZero) {
+        if (roomZero && selectedTool != "door") {
             if (Math.abs(endMouseX - roomZero.x1) < 15 || endMouseX - roomZero.x1 < 0)
                 endMouseX = roomZero.x1;
             if (Math.abs(endMouseX - roomZero.x2) < 15 || endMouseX - roomZero.x2 > 0)
@@ -103,7 +124,41 @@ const drawing = (e) => {
             if (Math.abs(endMouseY - roomZero.y2) < 15 || endMouseY - roomZero.y2 > 0)
                 endMouseY = roomZero.y2;
         }
-        
+        if(selectedTool === "room" || selectedTool === "lader")
+        {
+            for (let i = 1; i < roomCoordinates.length; i++) {
+                const room = roomCoordinates[i];
+                if (Math.abs(endMouseX - room.x1) < 15)
+                endMouseX = room.x1;
+                if (Math.abs(endMouseX - room.x2) < 15)
+                endMouseX = room.x2;
+                if (Math.abs(endMouseY - room.y1) < 15)
+                endMouseY = room.y1;
+                if (Math.abs(endMouseY - room.y2) < 15)
+                endMouseY = room.y2;
+                
+            }
+        } 
+
+        if (selectedTool === "table") 
+        {
+            for (let i = 0; i < tableCoordinates.length; i++) {
+                const table = tableCoordinates[i];
+            
+                if(table.numberroom===roomNow)
+                {
+                    if (Math.abs(endMouseX - table.x1) < 15)
+                    endMouseX = table.x1;
+                    if (Math.abs(endMouseX - table.x2) < 15)
+                    endMouseX = table.x2;
+                    if (Math.abs(endMouseY - table.y1) < 15)
+                    endMouseY = table.y1;
+                    if (Math.abs(endMouseY - table.y2) < 15)
+                    endMouseY = table.y2;
+                }
+            }
+        }
+          
 
         if (selectedTool === "brush" || selectedTool === "eraser") {
             // Если выбранный инструмент - ластик, то установить стиль обводки в белый, 
@@ -140,7 +195,7 @@ const drawing = (e) => {
 function handleMouseUp(e) {
 
     if (selectedTool != 'null' && isInput != true) {
-        removAfterToHistory();
+        //removAfterToHistory();
 
         if (selectedTool === "table") {
 
